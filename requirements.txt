@@ -4,7 +4,7 @@ appdirs==1.4.4
 asttokens==2.0.5
 astunparse==1.6.3
 attrs==23.1.0
-backcall @ file:///home/conda/feedstock_root/build_artifacts/backcall_1592338393461/work
+backcall==0.2.0
 beautifulsoup4==4.12.3
 blinker==1.6.2
 cachetools==5.3.1
