@@ -38,4 +38,4 @@ if len(features) > 0:
     # Display model summary
     st.text(model.summary())
 else:
-    st.write("Please select at least one feature.")
+    st.write("Please select at least two features.")
