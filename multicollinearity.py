@@ -13,19 +13,41 @@ def calculate_vif(X):
 
 st.title('Effects of Multicollinearity on OLS Regression')
 
-# Use the provided EUR/USD dataset
-df = pd.read_csv('NSEBANK.csv')
+# Create synthetic data
+np.random.seed(42)
+n_samples = 100
+
+# X1 and X2 are completely uncorrelated
+X1 = np.random.normal(0, 1, n_samples)
+X2 = np.random.normal(0, 1, n_samples)
+
+# X3, X4, X5, and X6 with increasing collinearity
+X3 = X1 + np.random.normal(0, 0.1, n_samples)
+X4 = X3 + np.random.normal(0, 0.1, n_samples)
+X5 = X4 + np.random.normal(0, 0.1, n_samples)
+X6 = X5 + np.random.normal(0, 0.1, n_samples)
+
+# Combine into a DataFrame
+df = pd.DataFrame({
+    'X1': X1,
+    'X2': X2,
+    'X3': X3,
+    'X4': X4,
+    'X5': X5,
+    'X6': X6,
+    'Y': 2 * X1 + 3 * X2 + 1.5 * X3 + np.random.normal(0, 1, n_samples)  # Synthetic target variable
+})
 
 # Let the user select the features
 features = []
 # Add checkboxes for each feature
-for feature in ['Open','High','Low','Volume']:
+for feature in ['X1', 'X2', 'X3', 'X4', 'X5', 'X6']:
     if st.checkbox(f'Include {feature}'):
         features.append(feature)
 
 # Separate features and target
 X = df[features]
-y = df['Close']
+y = df['Y']
 
 if len(features) > 0:
     # MinMax scaling
