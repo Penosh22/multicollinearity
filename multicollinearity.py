@@ -42,5 +42,26 @@ if len(features) > 0:
 
     # Display model summary
     st.text(model.summary())
+
+    # Predictions and intervals
+    y_pred = model.predict(X_scaled)
+    se = model.bse
+
+    # Calculate confidence intervals
+    conf_int = model.conf_int(alpha=0.05)
+    conf_int.columns = ['Lower Bound', 'Upper Bound']
+
+    st.write('Confidence Intervals of the Coefficients:')
+    st.write(conf_int)
+
+    # Calculate prediction intervals
+    predictions = pd.DataFrame({
+        'Prediction': y_pred,
+        'Lower Bound': y_pred - 1.96 * se.mean(),
+        'Upper Bound': y_pred + 1.96 * se.mean()
+    })
+    
+    st.write('Predictions with Prediction Intervals:')
+    st.write(predictions)
 else:
-    st.write("Please select at least two features.")
+    st.write("Please select at least one feature.")
